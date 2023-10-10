@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        .user_image{
+            width: 50px;
+            height: 50px;
+        }
+        td{
+            text-align: center;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <table border="1" cellspacing="0" cellpadding="8px" align="center">
+        <thead>
+          <th>NAME</th>
+          <th>EMAIL</th>
+          <th>ORDERS</th>
+          <th>IMAGE</th>
+          <th colspan="2">ACTIONS</th>
+        </thead>
+        <tbody id="table_body"></tbody>
+      </table>
+    </div>
+
+    <script>
+        const table_body = document.getElementById("table_body")
+        fetchUsers()
+      function fetchUsers() {
+        fetch("http://localhost:3001/userDetails")
+          .then((res) => res.json())
+          .then((data) => {
+            render(data.data);
+          });
+      }
+
+      function render(data) {
+        table_body.innerHTML = data.map((ele) => {
+            return `
+                <tr>
+                    <td>${ele.user_name}</td>
+                    <td>${ele.user_email}</td>
+                    <td>${ele.total_orders}</td>
+                    <td> <img src="${ele.user_image}" class="user_image" /></td>
+                    <td> EDIT </td>
+                    <td> DELETE </td>
+                </tr>
+            `
+        }).join("")
+      }
+
+    </script>
+  </body>
+</html>

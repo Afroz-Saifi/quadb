@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      input,
+      button {
+        display: block;
+      }
+      input {
+        padding: 8px 12px;
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+      button {
+        margin: auto;
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <form id="formEl">
+        <input type="text" placeholder="username" id="user_name" required />
+        <input type="text" placeholder="email" id="user_email" required />
+        <input
+          type="password"
+          placeholder="password"
+          id="user_password"
+          required
+        />
+        <input
+          type="text"
+          placeholder="image url link"
+          id="user_image"
+          required
+        />
+        <input
+          type="number"
+          placeholder="Total orders"
+          id="user_orders"
+          required
+        />
+        <button type="submit">SUBMIT</button>
+      </form>
+    </div>
+
+    <script>
+      const formEl = document.getElementById("formEl");
+      formEl.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const userDetails = {
+          user_name: formEl.user_name.value,
+          user_password: formEl.user_password.value,
+          user_email: formEl.user_email.value,
+          user_image: formEl.user_image.value,
+          total_orders: formEl.user_orders.value,
+        };
+        insertNewUser(userDetails);
+      });
+
+      function insertNewUser(userDetails) {
+        fetch("http://localhost:3001/insert", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json", // Use 'Content-Type' with a capital 'C'
+          },
+          body: JSON.stringify(userDetails),
+        })
+          .then((res) => res.json()) // Parse the response as JSON
+          .then((data) => {
+            if (data.success) {
+              alert("done");
+              location.href = "http://localhost:3001/users"
+            } else {
+                console.log(data);
+            //   alert(data.error);
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </body>
+</html>

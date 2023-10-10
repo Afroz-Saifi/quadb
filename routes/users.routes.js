@@ -1,7 +1,7 @@
 const expres = require("express");
 const { alreadyExists } = require("../middleware/alreadyExists.middleware");
 const { checkEmailExistence } = require("../middleware/emailAuth.middleware");
-const { insertNewUser, deleteUser, getImage, getDetails, updateUser } = require("../controller/users.cotroller");
+const { insertNewUser, deleteUser, getImage, getDetails, updateUser, getAllUsers } = require("../controller/users.cotroller");
 
 const UserRouter = expres.Router();
 
@@ -19,5 +19,8 @@ UserRouter.get("/details/:user_id", getDetails)
 
 // updating user
 UserRouter.put('/update/:user_id', updateUser)
+
+// get all users details
+UserRouter.get("/userDetails", getAllUsers)
 
 module.exports = { UserRouter };

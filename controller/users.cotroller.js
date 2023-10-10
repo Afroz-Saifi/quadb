@@ -8,6 +8,7 @@ const insertNewUser = async (req, res) => {
     const hashPass = bcrypt.hashSync(user_password, 8);
     const data = await Users.create({ ...req.body, user_password: hashPass });
     return res.status(200).json({
+      success: true,
       msg: "new user added",
       user_details: data,
     });
@@ -108,4 +109,18 @@ const getImage = async (req, res) => {
   }
 }
 
-module.exports = { insertNewUser, deleteUser, getImage, getDetails, updateUser };
+// get all users details
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await Users.findAll({})
+    return res.status(200).json({
+      data: users
+    })    
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message
+    })
+  }
+}
+
+module.exports = { insertNewUser, deleteUser, getImage, getDetails, updateUser, getAllUsers };
