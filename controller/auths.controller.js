@@ -1,12 +1,13 @@
-const { Users } = require("../models/index");
+const { Auths } = require("../models/index");
 const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken')
 require("dotenv").config();
 
 const registerUser = async (req, res) => {
   try {
     const { user_password } = req.body;
     const hashPass = bcrypt.hashSync(user_password, 8);
-    const data = await Users.create({ ...req.body, user_password: hashPass });
+    const data = await Auths.create({ ...req.body, user_password: hashPass });
     return res.status(200).json({
       success: true,
       msg: "new user registered",
@@ -23,7 +24,7 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { user_email, user_password } = req.body;
-    const user = await Users.findOne({
+    const user = await Auths.findOne({
       where: {
         user_email: user_email,
       },

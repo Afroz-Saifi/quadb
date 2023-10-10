@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require('cors')
 const db = require("./models/index");
 const { UserRouter } = require("./routes/users.routes");
+const { authRouter } = require("./routes/auth.routes");
 
 const app = express();
 app.use(express.json());
@@ -15,6 +16,7 @@ app.get('/users', (req, res) => {
     res.sendFile(__dirname + '/view/users.html')
 })
 
+app.use('/auth', authRouter)
 app.use('/', UserRouter)
 
 db.sequelize.sync().then(() => {
