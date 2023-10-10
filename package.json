@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/Afroz-Saifi/quadb#readme",
   "dependencies": {
+    "dotenv": "^16.3.1",
+    "email-existence": "^0.1.6",
     "express": "^4.18.2",
     "mysql2": "^3.6.1",
     "nodemon": "^3.0.1",

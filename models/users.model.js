@@ -13,7 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         user_password: DataTypes.STRING,
         user_image: DataTypes.STRING,
         total_orders: DataTypes.INTEGER,
-        created_at: DataTypes.DATE,
+        created_at: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW, // Set the default value to the current date and time
+        },
         last_logged_in: DataTypes.DATE,
     });
     return Users;
