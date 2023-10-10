@@ -2,6 +2,7 @@ const expres = require("express");
 const { alreadyExists } = require("../middleware/alreadyExists.middleware");
 const { checkEmailExistence } = require("../middleware/emailAuth.middleware");
 const { insertNewUser, deleteUser, getImage, getDetails, updateUser, getAllUsers } = require("../controller/users.cotroller");
+const { authUser } = require("../middleware/auth.middlware");
 
 const UserRouter = expres.Router();
 
@@ -9,7 +10,7 @@ const UserRouter = expres.Router();
 UserRouter.post("/insert", alreadyExists, checkEmailExistence, insertNewUser);
 
 // delte a users profile
-UserRouter.delete('/delete/:id', deleteUser)
+UserRouter.delete('/delete/:id', authUser, deleteUser)
 
 // getting image of a user
 UserRouter.get("/image/:user_id", getImage)
@@ -18,7 +19,7 @@ UserRouter.get("/image/:user_id", getImage)
 UserRouter.get("/details/:user_id", getDetails)
 
 // updating user
-UserRouter.put('/update/:user_id', updateUser)
+UserRouter.put('/update/:user_id', authUser, updateUser)
 
 // get all users details
 UserRouter.get("/userDetails", getAllUsers)
